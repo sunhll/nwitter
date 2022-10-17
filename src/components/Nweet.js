@@ -1,6 +1,7 @@
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
 
+//Home.jsのNweet表示でcallされる。
 const Nweet = ({ nweetObj, isOwner }) => {
 
     const [doingEditFlag, setDoingEditFlag] = useState(false);
@@ -11,6 +12,8 @@ const Nweet = ({ nweetObj, isOwner }) => {
         if (ok) {
             //firebase doc referanceを利用してdocument IDにマッピングするdocument削除
             await dbService.doc(`nweets/${nweetObj.id}`).delete();
+            //firebase storage serviceのrefFromURLのパラメータでファイルURLを送ってref取得が可能。
+            await storageService.refFromURL(nweetObj.attachmentUrl).delete();
         }
     };
 
@@ -49,6 +52,7 @@ const Nweet = ({ nweetObj, isOwner }) => {
                 ) : (
                     <>
                         <h4>{nweetObj.msg}</h4>
+                        {nweetObj.attachmentUrl && <img src={nweetObj.attachmentUrl} width="50px" height="50px" />}
                         {isOwner && (
                             <>
                                 <button onClick={onDeleteClick}>Delete Nweet</button>
