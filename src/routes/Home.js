@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = ({ userObj }) => {
     const [nweet, setNweet] = useState("");
     const [nweets, setNweets] = useState([]);
-    const [fileURL, setFileURL] = useState();
+    const [fileURL, setFileURL] = useState("");
 
     //firebaseからdocument全量取得
     //collection = フォルダー
@@ -62,7 +62,7 @@ const Home = ({ userObj }) => {
     // 上記と同様。(ファイル用)
     // event listener
     const onFileChange = (event) => {
-        // ReactのHOOKS?機能： event.targetからfilesを取得する方法
+        // ReactのHOOKS機能： event.targetからfilesを取得する方法 ※TODO:react hookに関して知識が足りない。。。
         const { target: { files } } = event;
         const theFile = files[0];
         // file reader apiを活用
