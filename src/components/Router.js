@@ -6,10 +6,10 @@ import Profile from "routes/Profile";
 import Navigation from "components/navigation";
 
 //App.jsからcallされるApp.jsのログイン情報で遷移先を区別する
-const AppRouter = ({ propIsLoggedIn, propUserObj }) => {
+const AppRouter = ({ propIsLoggedIn, propUserObj, propRefreshUser }) => {
     return (
         <Router>
-            {propIsLoggedIn && <Navigation />}
+            {propIsLoggedIn && <Navigation userObj={propUserObj} />}
             <Switch>
                 {propIsLoggedIn ? (
                     <>
@@ -17,7 +17,7 @@ const AppRouter = ({ propIsLoggedIn, propUserObj }) => {
                             <Home userObj={propUserObj} />
                         </Route>
                         <Route exact path="/profile">
-                            <Profile userObj={propUserObj} />
+                            <Profile userObj={propUserObj} refreshUser={propRefreshUser} />
                         </Route>
                         <Redirect from="*" to="/" />
                     </>
