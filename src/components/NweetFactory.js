@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { dbService, storageService } from "fbase";
 import { v4 as uuidv4 } from "uuid";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 // Home.jsからcallされるNweet画面
 const NweetFactory = ({ userObj }) => {
@@ -9,6 +11,11 @@ const NweetFactory = ({ userObj }) => {
     const [fileURL, setFileURL] = useState("");
 
     const onSubmit = async (event) => {
+
+        if (nweet === "") {
+            return;
+        }
+
         event.preventDefault();
         let fileDownloadURL = "";
 
@@ -64,18 +71,34 @@ const NweetFactory = ({ userObj }) => {
     // event listener
     const onClearFileURL = () => {
         //fileURL初期化
-        setFileURL(null);
+        setFileURL("");
     };
 
     return (
-        <form>
-            <input type="text" value={nweet} onChange={textOnChange} placeholder="What's on your mind?" maxLength={100} />
-            <input type="file" accept="image/*" onChange={onFileChange} />
-            <input type="submit" value="Nweet" onClick={onSubmit} />
+        <form onSubmit={onSubmit} className="factoryForm">
+            <div className="factoryInput__container">
+                <input
+                    className="factoryInput__input"
+                    value={nweet}
+                    onChange={textOnChange}
+                    type="text"
+                    placeholder="What's on your mind?"
+                    maxLength={120}
+                />
+                <input type="submit" value="&rarr;" className="factoryInput__arrow" />
+            </div>
+            <label htmlFor="attach-file" className="factoryInput__label">
+                <span>Add photos</span>
+                <FontAwesomeIcon icon={faPlus} />
+            </label>
+            <input id="attach-file" type="file" accept="image/*" onChange={onFileChange} style={{ opacity: 0, }} />
             {fileURL && (
-                <div>
-                    <img src={fileURL} width="50px" height="50px" />
-                    <button onClick={onClearFileURL}>Clear</button>
+                <div className="factoryForm__attachment">
+                    <img src={fileURL} style={{ backgroundImage: fileURL, }} />
+                    <div className="factoryForm__clear" onClick={onClearFileURL}>
+                        <span>Remove</span>
+                        <FontAwesomeIcon icon={faTimes} />
+                    </div>
                 </div>
             )}
         </form>

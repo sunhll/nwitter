@@ -12,7 +12,7 @@ const AppRouter = ({ propIsLoggedIn, propUserObj, propRefreshUser }) => {
             {propIsLoggedIn && <Navigation userObj={propUserObj} />}
             <Switch>
                 {propIsLoggedIn ? (
-                    <>
+                    <div style={{ maxWidth: 890, width: "100%", margin: "0 auto", marginTop: 80, display: "flex", justifyContent: "center", }} >
                         <Route exact path="/">
                             <Home userObj={propUserObj} />
                         </Route>
@@ -20,7 +20,7 @@ const AppRouter = ({ propIsLoggedIn, propUserObj, propRefreshUser }) => {
                             <Profile userObj={propUserObj} refreshUser={propRefreshUser} />
                         </Route>
                         <Redirect from="*" to="/" />
-                    </>
+                    </div>
                 ) : (
                     <>
                         <Route exact path="/">
