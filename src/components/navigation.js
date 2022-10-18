@@ -3,8 +3,15 @@ import { Link } from "react-router-dom";
 
 //ユーザーが既にログインされた場合、表示されるページ
 const Navigation = ({ userObj }) => {
+    let name
+    
+    //臨時対応
+    try {
+        name = userObj.displayName;
+    } catch (error) {
+        name = null;
+    }
 
-    let name = userObj.displayName;
     if (name === null) {
         name = userObj.email.split('@')[0];
     }
