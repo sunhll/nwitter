@@ -22,7 +22,7 @@ const Profile = ({ userObj, refreshUser }) => {
         // 臨時対応local loginの場合、displaynameがないため、メールアドレス'＠'の前方を取得して設定
         let name = userObj.displayName;
         if (name === null) {
-            name = userObj.email.split('@')[0];
+            name = "unkwoun";
         }
 
         if (name !== newDisplayname) {
